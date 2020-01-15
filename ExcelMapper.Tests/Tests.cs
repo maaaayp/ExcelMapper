@@ -57,8 +57,14 @@ namespace Ganss.Excel.Tests
         {
             var excelMapper = new ExcelMapper(@"..\..\..\products.xlsx");
             var headers=excelMapper.GetHeders();
-            Assert.AreEqual(headers.Length, 6);
-            var products = excelMapper.Fetch<Product>().ToList();
+            Assert.AreEqual(headers.Length, 8);
+            foreach (var item in excelMapper.Fetch<Product>())
+            {
+                var cell = excelMapper.CurrentRow.GetCell(headers.ToList().IndexOf(headers[1]));
+                var value = cell.StringCellValue;
+                Assert.IsNotEmpty(value);
+            }
+            var products = excelMapper.Fetch<Product>();
             CollectionAssert.AreEqual(new List<Product>
             {
                 new Product { Name = "Nudossi", NumberInStock = 60, Price = 1.99m, Value = "C2*D2" },

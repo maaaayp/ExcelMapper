@@ -204,14 +204,22 @@ namespace Ganss.Excel
         /// </summary>
         /// <param name="sheetIndex">Sheet Index</param>
         /// <returns></returns>
-        public string[] GetHeders(int sheetIndex=0)
+        public string[] GetHeders(int sheetIndex = 0)
         {
             if (Headers != null)
                 return Headers;
             var sheet = Workbook.GetSheetAt(sheetIndex);
-            Headers = sheet.GetRow(0).Cells.Where(c => (c.CellType == CellType.String && !string.IsNullOrWhiteSpace(c.StringCellValue))).Select(p => p.StringCellValue).ToArray();
+            Headers = sheet.GetRow(0).Cells.Select(c =>
+            {
+                if (c.CellType == CellType.String && !string.IsNullOrWhiteSpace(c.StringCellValue))
+                    return c.StringCellValue;
+                return c.ToString();
+            }).ToArray();
             return Headers;
         }
+
+        public IRow CurrentRow { get; private set; }        
+
 
         IEnumerable<T> Fetch<T>(ISheet sheet) where T : new()
         {
@@ -228,6 +236,7 @@ namespace Ganss.Excel
 
             while (i <= MaxRowNumber && (row = sheet.GetRow(i)) != null)
             {
+                CurrentRow = row;
                 // optionally skip header row and blank rows
                 if ((!HeaderRow || i != HeaderRowNumber) && (!SkipBlankRows || row.Cells.Any(c => c.CellType != CellType.Blank)))
                 {
