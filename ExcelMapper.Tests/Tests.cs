@@ -57,6 +57,7 @@ namespace Ganss.Excel.Tests
         {
             var excelMapper = new ExcelMapper(@"..\..\..\products.xlsx");
             var headers=excelMapper.GetHeders();
+            Assert.AreEqual(headers.Length, 6);
             var products = excelMapper.Fetch<Product>().ToList();
             CollectionAssert.AreEqual(new List<Product>
             {
