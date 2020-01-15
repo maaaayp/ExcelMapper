@@ -55,7 +55,9 @@ namespace Ganss.Excel.Tests
         [Test]
         public void FetchTest()
         {
-            var products = new ExcelMapper(@"..\..\..\products.xlsx").Fetch<Product>().ToList();
+            var excelMapper = new ExcelMapper(@"..\..\..\products.xlsx");
+            var headers=excelMapper.GetHeders();
+            var products = excelMapper.Fetch<Product>().ToList();
             CollectionAssert.AreEqual(new List<Product>
             {
                 new Product { Name = "Nudossi", NumberInStock = 60, Price = 1.99m, Value = "C2*D2" },

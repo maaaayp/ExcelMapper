@@ -197,6 +197,22 @@ namespace Ganss.Excel
             return Fetch<T>(sheet);
         }
 
+        private string[] Headers { get; set;}
+
+        /// <summary>
+        /// Get excel headers
+        /// </summary>
+        /// <param name="sheetIndex">Sheet Index</param>
+        /// <returns></returns>
+        public string[] GetHeders(int sheetIndex=0)
+        {
+            if (Headers != null)
+                return Headers;
+            var sheet = Workbook.GetSheetAt(sheetIndex);
+            Headers = sheet.GetRow(0).Cells.Where(c => (c.CellType == CellType.String && !string.IsNullOrWhiteSpace(c.StringCellValue))).Select(p => p.StringCellValue).ToArray();
+            return Headers;
+        }
+
         IEnumerable<T> Fetch<T>(ISheet sheet) where T : new()
         {
             var typeMapper = TypeMapperFactory.Create(typeof(T));
