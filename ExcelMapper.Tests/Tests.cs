@@ -8,6 +8,7 @@ using System.Text;
 using Ganss.Excel.Exceptions;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using ExcelMapper.Tests;
 
 namespace Ganss.Excel.Tests
 {
@@ -575,6 +576,18 @@ namespace Ganss.Excel.Tests
             Assert.AreEqual(34, ex.Column);
 
             Assert.Throws<ArgumentNullException>(() => ex.GetObjectData(null, new System.Runtime.Serialization.StreamingContext()));
+        }
+        [Test]
+        public void TestExcel()
+        {
+            var excelMapper = new ExcelMapper(@"..\..\..\testmyp.xlsx");
+            var list = new List<ConfigData>();
+            var headers = excelMapper.GetHeders();
+            foreach (var item in excelMapper.Fetch<ConfigData>())
+            {
+
+                list.Add(item);
+            } 
         }
     }
 }

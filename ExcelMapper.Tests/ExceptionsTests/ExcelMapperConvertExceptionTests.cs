@@ -54,5 +54,7 @@ namespace ExcelMapper.Tests.ExceptionsTests
             Assert.That(ex.Message.Contains($"[L:{line}]"));
             Assert.That(ex.Message.Contains($"[C:{column}]"));
         }
+
+       
     }
 }
