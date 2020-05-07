@@ -580,7 +580,7 @@ namespace Ganss.Excel.Tests
         [Test]
         public void TestExcel()
         {
-            var excelMapper = new ExcelMapper(@"..\..\..\testmyp.xlsx");
+            var excelMapper = new ExcelMapper(@"..\..\..\1.xlsx");
             var list = new List<ConfigData>();
             var headers = excelMapper.GetHeders();
             foreach (var item in excelMapper.Fetch<ConfigData>())

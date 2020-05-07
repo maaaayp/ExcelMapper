@@ -194,9 +194,13 @@ namespace Ganss.Excel
                 v = SetProp(val);
             else if (IsNullable && (val == null || (val as string) == ""))
                 v = null;
-            else if (string.IsNullOrWhiteSpace(val as string) && (PropertyType == typeof(int) || PropertyType == typeof(decimal)))
+            else if (string.IsNullOrWhiteSpace(val?.ToString()) && (PropertyType == typeof(int) || PropertyType == typeof(decimal)))
             {
-                v = 0;
+                if (PropertyType == typeof(int))
+                { v = default(int); }
+                else if (PropertyType == typeof(decimal))
+                { v = default(decimal); }
+                else v = val;
             }
             else
                 v = Convert.ChangeType(val, PropertyType, CultureInfo.InvariantCulture);
