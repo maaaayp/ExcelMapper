@@ -257,6 +257,10 @@ namespace Ganss.Excel
                                 throw new ExcelMapperConvertException(cellValue, col.Value.PropertyType, i, col.Key, e);
                             }
                         }
+                        else
+                        {
+
+                        }
                     }
 
                     if (TrackObjects) Objects[sheet.SheetName][i] = o;
@@ -448,7 +452,6 @@ namespace Ganss.Excel
                     i++;
                 }
             }
-
             Workbook.Write(stream);
         }
 

@@ -194,7 +194,7 @@ namespace Ganss.Excel
                 v = SetProp(val);
             else if (IsNullable && (val == null || (val as string) == ""))
                 v = null;
-            else if ((val as string) == "" && (PropertyType == typeof(int) || PropertyType == typeof(decimal)))
+            else if (string.IsNullOrWhiteSpace(val as string) && (PropertyType == typeof(int) || PropertyType == typeof(decimal)))
             {
                 v = 0;
             }
@@ -302,7 +302,6 @@ namespace Ganss.Excel
                             ColumnsByName[columnAttribute.Name] = ci;
                         else
                             ColumnsByName[prop.Name] = ci;
-
                         if (columnAttribute.Index > 0)
                             ColumnsByIndex[columnAttribute.Index - 1] = ci;
                     }
